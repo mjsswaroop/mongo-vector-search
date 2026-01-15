@@ -1,7 +1,7 @@
-# fastapi
-uvicorn
+fastapi>=0.110
+uvicorn>=0.23
 pymongo
 openai
-certifi
 python-dotenv
+certifi
 pydantic
