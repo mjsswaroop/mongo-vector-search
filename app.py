@@ -246,6 +246,32 @@ def get_embedding(text: str):
     return response.data[0].embedding
 
 
+# def vector_search(query: str, limit: int = 3):
+#     vector = get_embedding(query)
+
+#     pipeline = [
+#         {
+#             "$vectorSearch": {
+#                 "index": VECTOR_INDEX_NAME,
+#                 "path": VECTOR_FIELD_NAME,
+#                 "queryVector": vector,
+#                 "numCandidates": 50,
+#                 "limit": limit
+#             }
+#         },
+#         {
+#             "$project": {
+#                 "_id": 0,
+#                 "tourName": 1,
+#                 "destinations": 1,
+#                 "description": 1,
+#                 "score": {"$meta": "vectorSearchScore"}
+#             }
+#         }
+#     ]
+
+#     return list(collection.aggregate(pipeline))
+
 def vector_search(query: str, limit: int = 3):
     vector = get_embedding(query)
 
@@ -262,15 +288,19 @@ def vector_search(query: str, limit: int = 3):
         {
             "$project": {
                 "_id": 0,
-                "tourName": 1,
-                "destinations": 1,
-                "description": 1,
+                "embedding": 0,
+                "embeddingDim": 0,
+                "embeddingModel": 0,
+                "embeddingText": 0,
+                "status": 0,
+                "createdAt": 0,
                 "score": {"$meta": "vectorSearchScore"}
             }
         }
     ]
 
     return list(collection.aggregate(pipeline))
+
 
 # ==============================
 # Request Models
